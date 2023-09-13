@@ -1,0 +1,16 @@
+version: '3'
+services:
+  websocket-server:
+    build: .
+    networks:
+      - tunnel
+  cf-tunnel:
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    networks:
+      - tunnel
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+networks:
+  tunnel:
